@@ -2,14 +2,14 @@ redis:
  image: redis
 
 vote:
- image: vote      #build: ./vote
+ image: app1      #build: ./app1
  ports:
   - 5050:80
  links:
   - redis
 
 result:
- image: result    #build: ./result
+ image: app2    #build: ./app2
  ports:
   - 5051:80
  links:
@@ -18,7 +18,7 @@ db:
  image: mysql
 
 worker:
- image: worker    #build: ./worker
+ image: app3    #build: ./app3
  links:
   - redis
   - db
