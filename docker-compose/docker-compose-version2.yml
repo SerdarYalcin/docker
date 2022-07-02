@@ -11,12 +11,12 @@ services:
    - back-end
 
  worker:
-  image: worker
+  image: app1
   networks:
    - back-end
 
  result:
-  image: result
+  image: app2
   ports:
    - 5050:80
   networks:
@@ -24,7 +24,7 @@ services:
    - back-end
 
  vote:
-  image: voting-app
+  image: app3
   ports:
    - 5051:80
   depends_on:
