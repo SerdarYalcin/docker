@@ -1,1 +1,50 @@
+version: "2"
+services:
+ redis:
+  image: redis
+  networks:
+   - back-end
 
+ db:
+  image: mysql
+  networks:
+   - back-end
+
+ worker:
+  image: worker
+  networks:
+   - back-end
+
+ result:
+  image: result
+  ports:
+   - 5050:80
+  networks:
+   - front-end
+   - back-end
+
+ vote:
+  image: voting-app
+  ports:
+   - 5051:80
+  depends_on:
+   - redis
+  networks:
+   - front-end
+   - back-end
+
+
+networks:
+ front-end:
+  name: front-end
+  driver: bridge
+  ipam:
+   config:
+    - subnet: 10.10.1.0/24
+ back-end:
+  name: back-end
+  driver: bridge
+
+# It will create a dedicated bridge netwrok and attach the containers to that new network. So no need to use --link option. They will be able to talk to each other using their service name
+# We can specify dependency
+# We can create optional networks
