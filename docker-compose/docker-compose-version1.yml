@@ -1,0 +1,28 @@
+redis:
+ image: redis
+
+vote:
+ image: vote      #build: ./vote
+ ports:
+  - 5050:80
+ links:
+  - redis
+
+result:
+ image: result    #build: ./result
+ ports:
+  - 5051:80
+ links:
+  - db
+db:
+ image: mysql
+
+worker:
+ image: worker    #build: ./worker
+ links:
+  - redis
+  - db
+
+# We must use defaul bridge network(No option to specify additional one)
+# We are not able to specify dependency(e.g the database must come up first)
+# We should use --link option to enable comminication among the containers that we desire
